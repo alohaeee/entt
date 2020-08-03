@@ -137,7 +137,7 @@ public:
         }
     }
 
-private:
+protected:
     std::vector<delegate<Ret(Args...)>> calls;
 };
 
