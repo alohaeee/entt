@@ -9,8 +9,8 @@ template<typename>
 class delegate;
 
 
-class dispatcher;
-
+template<template<typename> typename>
+class basic_dispatcher;
 
 template<typename>
 class emitter;
@@ -28,6 +28,8 @@ class sink;
 
 template<typename>
 class sigh;
+
+using dispatcher = basic_dispatcher<entt::sigh>;
 
 
 }

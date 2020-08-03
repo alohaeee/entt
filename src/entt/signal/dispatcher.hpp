@@ -28,7 +28,8 @@ namespace entt {
  * The dispatcher creates instances of the `sigh` class internally. Refer to the
  * documentation of the latter for more details.
  */
-class dispatcher {
+template<template<typename> class SignalType>
+class basic_dispatcher {
     struct basic_pool {
         virtual ~basic_pool() = default;
         virtual void publish() = 0;
@@ -39,7 +40,7 @@ class dispatcher {
 
     template<typename Event>
     struct pool_handler final: basic_pool {
-        using signal_type = sigh<void(const Event &)>;
+        using signal_type = SignalType<void(const Event &)>;
         using sink_type = typename signal_type::sink_type;
 
         void publish() override {
@@ -61,7 +62,7 @@ class dispatcher {
         }
 
         [[nodiscard]] sink_type sink() ENTT_NOEXCEPT {
-            return entt::sink{signal};
+            return sink_type{signal};
         }
 
         template<typename... Args>
